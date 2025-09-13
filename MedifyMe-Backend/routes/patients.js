@@ -11,9 +11,11 @@ const multer = Multer({
   },
 });
 
-router.route("/login").post(catchAsync(patients.login));
-router.route("/register").post(catchAsync(patients.register));
+// REMOVED: Authentication routes (not needed for hackathon)
+// router.route("/login").post(catchAsync(patients.login));
+// router.route("/register").post(catchAsync(patients.register));
 
+// Simplified routes - no authentication required
 router
   .route("/health_history")
   .get(patients.healthHistory)
@@ -30,6 +32,14 @@ router
   .post(multer.array("files"), patients.testForm);
 
 router.route("/visits").get(patients.visits);
-router.route("/request_doctor").post(patients.requestDoctor);
+
+// REMOVED: Doctor request functionality (not needed for hackathon)
+// router.route("/request_doctor").post(patients.requestDoctor);
+
+// NEW: Route for collecting patient data from chat assistant
+router.route("/collect-patient-data").post(catchAsync(patients.collectPatientData));
+router.route("/simple-register").post(catchAsync(patients.simpleRegister));
+router.route("/chat").post(catchAsync(patients.chat));
+
 
 module.exports = router;

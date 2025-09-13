@@ -1,0 +1,16 @@
+{
+  "name": "cardiology-assistant",
+  "version": "1.0.0",
+  "description": "AI Assistant for Cardiology Consults",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.66.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}

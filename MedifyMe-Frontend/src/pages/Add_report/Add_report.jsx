@@ -1,34 +1,23 @@
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./Add_report.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTestFormMutation } from "../../store";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
 import useFileUploader from "../../hooks/useFileUploader";
 
-function Home() {
+function AddReport() {
   const navigate = useNavigate();
   const [testName, setTestName] = useState("");
   const [testComments, setTestComments] = useState("");
   const [date, setDate] = useState("");
 
-  const patient = useSelector((state) => {
-    return state.patient;
-  });
-
   const [files, handleFileChange] = useFileUploader(4);
-
   const [form, formResults] = useTestFormMutation();
   const isLoading = formResults.isLoading;
 
-  useEffect(() => {
-    if (!patient.isLoggedIn) {
-      navigate("/login");
-      toast.error("Please login to continue");
-    }
-  }, [navigate, patient.isLoggedIn]);
+  // REMOVED: Authentication check - no longer needed
 
   if (isLoading) {
     return (
@@ -45,7 +34,7 @@ function Home() {
     formData.append("date", date);
     formData.append("testName", testName);
     formData.append("testComments", testComments);
-    formData.append("id", patient.id);
+    // REMOVED: formData.append("id", patient.id); - using hardcoded patient in backend
 
     for (let i = 0; i < files.length; i++) {
       formData.append("files", files[i]);
@@ -53,6 +42,7 @@ function Home() {
 
     try {
       await form(formData);
+      toast.success("Test report added successfully!");
       navigate("/test");
     } catch (error) {
       console.error(error);
@@ -83,6 +73,7 @@ function Home() {
             className={styles.comments}
             value={testName}
             onChange={(e) => setTestName(e.target.value)}
+            placeholder="Enter test names (e.g., Blood Test, ECG, X-Ray)"
           ></textarea>
 
           <label className={styles.text_health} htmlFor="doctor-comments">
@@ -94,6 +85,7 @@ function Home() {
             className={styles.comments}
             value={testComments}
             onChange={(e) => setTestComments(e.target.value)}
+            placeholder="Add any additional comments about the test results"
           ></textarea>
 
           <label className={styles.text_health} htmlFor="date">
@@ -112,8 +104,8 @@ function Home() {
           <div className={styles.upload_box}>
             <div className={styles.upload_file}>
               <label className={styles.upload} htmlFor="file-upload">
-                <img src="/Cloud_Upload.webp"></img>
-                <span>Upload Documents</span>
+                <img src="/Cloud_Upload.webp" alt="Upload" />
+                <span>Upload Test Reports</span>
               </label>
               <input
                 className={styles.health_file}
@@ -125,11 +117,13 @@ function Home() {
                 multiple
               />
             </div>
-            <div className={styles.numfiles}>{files.length} files selected</div>
+            <div className={styles.numfiles}>
+              {files.length} {files.length === 1 ? 'file' : 'files'} selected
+            </div>
           </div>
           <div className={styles.submit_btn}>
             <button className={styles.submit_button} type="submit">
-              Add
+              Add Report
             </button>
           </div>
         </form>
@@ -137,4 +131,5 @@ function Home() {
     </>
   );
 }
-export default Home;
+
+export default AddReport;

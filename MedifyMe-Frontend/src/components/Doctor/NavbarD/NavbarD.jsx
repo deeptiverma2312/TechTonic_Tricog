@@ -76,7 +76,7 @@ const Navbar = () => {
             >
               <Link to="/doctor/patient_appointment">Appointment</Link>
             </li>
-            <li>
+            {/* <li>
               <div className={styles.signIn}>
                 <img alt="account" src={Account} />
                 {!doctor.isLoggedIn ? (
@@ -85,7 +85,7 @@ const Navbar = () => {
                   <Link to="/doctor/settings/account">Account</Link>
                 )}
               </div>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className={styles.hamburger}><Burger patient/></div>

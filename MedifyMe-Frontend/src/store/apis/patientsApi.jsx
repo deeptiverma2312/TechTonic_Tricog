@@ -7,48 +7,35 @@ const patientApi = createApi({
     baseUrl: `${SERVER_URL}/patients`,
   }),
   endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (detail) => ({
-        url: "/login",
-        method: "POST",
-        body: detail,
-      }),
-    }),
-    register: builder.mutation({
-      query: (data) => ({
-        url: "/register",
-        method: "POST",
-        body: { data },
-      }),
-    }),
+    // REMOVED: login and register mutations (no auth needed)
+    
+    // Query endpoints - now work without patient ID requirement
     fetchHealthHistory: builder.query({
-      query: (id) => ({
+      query: () => ({
         url: "/health_history",
-        params: { id },
         method: "GET",
       }),
     }),
     fetchPrescription: builder.query({
-      query: (id) => ({
+      query: () => ({
         url: "/prescription",
-        params: { id },
         method: "GET",
       }),
     }),
     fetchTests: builder.query({
-      query: (id) => ({
+      query: () => ({
         url: "/tests",
-        params: { id },
         method: "GET",
       }),
     }),
     fetchVisits: builder.query({
-      query: (id) => ({
+      query: () => ({
         url: "/visits",
-        params: { id },
         method: "GET",
       }),
     }),
+    
+    // Form submission endpoints - work with hardcoded patient data
     healthForm: builder.mutation({
       query: (formData) => ({
         url: "/health_history",
@@ -70,19 +57,22 @@ const patientApi = createApi({
         body: formData,
       }),
     }),
-    requestDoctor: builder.mutation({
-      query: (formData) => ({
-        url: "/request_doctor",
+    
+    // NEW: Chat data collection endpoint for hackathon
+    collectPatientData: builder.mutation({
+      query: (patientData) => ({
+        url: "/collect-patient-data",
         method: "POST",
-        body: formData,
+        body: patientData,
       }),
     }),
+    
+    // REMOVED: requestDoctor mutation (no doctor management needed)
   }),
 });
 
 export const {
-  useLoginMutation,
-  useRegisterMutation,
+  // REMOVED: useLoginMutation, useRegisterMutation
   useFetchHealthHistoryQuery,
   useFetchPrescriptionQuery,
   useFetchTestsQuery,
@@ -90,6 +80,7 @@ export const {
   usePrescriptionFormMutation,
   useTestFormMutation,
   useFetchVisitsQuery,
-  useRequestDoctorMutation,
+  useCollectPatientDataMutation, // NEW: For chat assistant
+  // REMOVED: useRequestDoctorMutation
 } = patientApi;
 export { patientApi };

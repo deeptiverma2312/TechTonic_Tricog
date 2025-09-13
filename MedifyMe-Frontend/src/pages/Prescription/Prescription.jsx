@@ -1,60 +1,39 @@
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./Prescription.module.css";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useFetchPrescriptionQuery } from "../../store";
-import Loading from "../../components/Loading/Loading";
+import { useState } from "react";
 import DocumentPreview from "../../components/DocumentPreview/DocumentPreview";
 
 function Prescription() {
-  const navigate = useNavigate();
-
-  const patient = useSelector((state) => {
-    return state.patient;
-  });
-
-  const {
-    data: rawData,
-    error: rawError,
-    isFetching,
-    refetch,
-  } = useFetchPrescriptionQuery(patient.id);
-
-  const data = useMemo(() => rawData, [rawData]);
-  const error = useMemo(() => rawError, [rawError]);
-
-  const [selectedPrescription, setSelectedPrescription] = useState(
-    data?.prescriptions?.[0] ?? null
-  );
-
-  useEffect(() => {
-    if (data && selectedPrescription === null) {
-      setSelectedPrescription(data.prescriptions[0]);
+  // HARDCODED mock data for hackathon
+  const MOCK_PRESCRIPTIONS = [
+    {
+      date: "2024-01-15",
+      medications: "Lisinopril 10mg, Metformin 500mg",
+      prescriptionComments: "Take as prescribed for blood pressure and diabetes management",
+      files: [
+        {
+          url: "https://via.placeholder.com/300x400/e1f5fe/01579b?text=Prescription+1",
+          ocr: "<p><strong>Prescription Analysis:</strong></p><ul><li><strong>Lisinopril 10mg:</strong> Take once daily in the morning. Monitor blood pressure regularly.</li><li><strong>Metformin 500mg:</strong> Take twice daily with meals to reduce stomach upset.</li></ul><h3>General Information:</h3><p>These medications are commonly prescribed together for patients with both hypertension and type 2 diabetes.</p><ul><li>Monitor blood glucose levels daily</li><li>Check blood pressure weekly</li><li>Stay hydrated and maintain regular exercise</li></ul>"
+        }
+      ]
+    },
+    {
+      date: "2024-02-10",
+      medications: "Aspirin 81mg, Atorvastatin 20mg",
+      prescriptionComments: "Low-dose aspirin for cardiovascular protection, statin for cholesterol",
+      files: [
+        {
+          url: "https://via.placeholder.com/300x400/f3e5f5/6a1b9a?text=Prescription+2",
+          ocr: "<p><strong>Prescription Analysis:</strong></p><ul><li><strong>Aspirin 81mg:</strong> Take once daily with food. Low-dose for heart protection.</li><li><strong>Atorvastatin 20mg:</strong> Take once daily in the evening. Monitor liver function.</li></ul><h3>General Information:</h3><p>This combination is effective for cardiovascular risk reduction in patients with elevated cholesterol.</p><ul><li>Follow low-cholesterol diet</li><li>Regular exercise recommended</li><li>Avoid grapefruit juice with statin</li></ul>"
+        }
+      ]
     }
-  }, [data, selectedPrescription]);
+  ];
 
-  useEffect(() => {
-    if (!patient.isLoggedIn) {
-      navigate("/login");
-      toast.error("Please login to continue");
-    }
-    refetch();
-  }, [navigate, patient.isLoggedIn]);
+  const [selectedPrescription, setSelectedPrescription] = useState(MOCK_PRESCRIPTIONS[0]);
 
-  if (isFetching) {
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // REMOVED: All authentication logic, Redux selectors, API calls
 
   return (
     <>
@@ -62,26 +41,24 @@ function Prescription() {
       <div className={styles.PreH}>
         <div className={styles.t1}>Prescription History</div>
         <div className={styles.docs}>
-          {data &&
-            data.prescriptions &&
-            data.prescriptions.map((prescription, index) => (
-              <div
-                className={
-                  selectedPrescription !== prescription
-                    ? styles.doc1
-                    : styles.selected
-                }
-                key={index}
-                onClick={() => setSelectedPrescription(prescription)}
-              >
-                <div className={styles.date}>{prescription.date}</div>
-              </div>
-            ))}
+          {MOCK_PRESCRIPTIONS.map((prescription, index) => (
+            <div
+              className={
+                selectedPrescription !== prescription
+                  ? styles.doc1
+                  : styles.selected
+              }
+              key={index}
+              onClick={() => setSelectedPrescription(prescription)}
+            >
+              <div className={styles.date}>{prescription.date}</div>
+            </div>
+          ))}
         </div>
       </div>
       <div className={styles.button}>
         <Link to="/prescription_form">
-          <div className={styles.b}>Create New Record</div>
+          <div className={styles.b}>Add New Prescription</div>
         </Link>
       </div>
       <div className={styles.currMed}>
@@ -94,24 +71,26 @@ function Prescription() {
           <div className={styles.con}>
             <ol>
               <li>
-                <p>Amoxicillin: </p>
-                <p className={styles.d}>x1/day</p>
+                <p>Lisinopril:</p>
+                <p className={styles.d}>10mg once daily</p>
               </li>
               <li>
-                <p>Benzocaine:</p> <p className={styles.d}>x1/day</p>
+                <p>Metformin:</p> 
+                <p className={styles.d}>500mg twice daily</p>
               </li>
               <li>
-                <p>Ibuprofen:</p> <p className={styles.d}>x1/day</p>
+                <p>Aspirin:</p> 
+                <p className={styles.d}>81mg once daily</p>
               </li>
               <li>
-                <p>Chlorhexidine mouthwash:</p>
-                <p className={styles.d}>x1/day</p>
+                <p>Atorvastatin:</p>
+                <p className={styles.d}>20mg once daily</p>
               </li>
             </ol>
           </div>
         </div>
         <div className={styles.inst}>
-          <div className={styles.b}>Instructions</div>
+          <div className={styles.b}>AI-Generated Instructions</div>
         </div>
         <div className={styles.dinfo}>
           <ol>
@@ -129,7 +108,7 @@ function Prescription() {
       <div className={styles.currentPres}>
         <div className={styles.ct}>
           <div className={styles.ct1}>Current Prescription</div>
-          <div className={styles.ct2}>20 Jan 2023</div>
+          <div className={styles.ct2}>{selectedPrescription?.date || "Recent"}</div>
         </div>
         <div className={styles.cont}>
           <div className={styles.leftcont}>
@@ -143,7 +122,7 @@ function Prescription() {
           </div>
           <div className={styles.photo}>
             <div className={styles.uploadedImg}>
-              <div className={styles.documentst}>Uploaded Documents</div>
+              <div className={styles.documentst}>Prescription Documents</div>
               <div className={styles.centerimgs}>
                 <div className={styles.imgGrid}>
                   {selectedPrescription &&
@@ -156,11 +135,9 @@ function Prescription() {
               </div>
             </div>
           </div>
-          {data.prescriptions.length === 0 && (
-            <div className={styles.lowerSection}>
-              Upload Your Prescriptions Here to see useful insights!
-            </div>
-          )}
+        </div>
+        <div className={styles.hackathonNote}>
+          <p><strong>Demo Note:</strong> This shows how your AI assistant can analyze prescription images using OCR and provide medication guidance, dosage information, and health recommendations.</p>
         </div>
       </div>
     </>

@@ -1,159 +1,211 @@
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./HealthHistory.module.css";
-import { useSelector } from "react-redux";
-import { useEffect, useState, useMemo } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useFetchHealthHistoryQuery } from "../../store";
-import { Link } from "react-router-dom";
-import Loading from "../../components/Loading/Loading";
-import DocumentPreview from "../../components/DocumentPreview/DocumentPreview";
 
 function HealthHistory() {
   const navigate = useNavigate();
-
-  const patient = useSelector((state) => {
-    return state.patient;
-  });
-
-  const {
-    data: rawData,
-    error: rawError,
-    isFetching,
-    refetch,
-  } = useFetchHealthHistoryQuery(patient.id);
-
-  const data = useMemo(() => rawData, [rawData]);
-  const error = useMemo(() => rawError, [rawError]);
-
-  const [selectedVisit, setSelectedVisit] = useState(data?.visits?.[0] ?? null);
+  const inputRef = useRef(null);
+  const messageListRef = useRef(null);
+  
+  const [currentPatient, setCurrentPatient] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
-    if (data && selectedVisit === null) {
-      setSelectedVisit(data.visits[0]);
+    // Get patient data from localStorage
+    const patientData = localStorage.getItem('currentPatient');
+    if (patientData) {
+      const patient = JSON.parse(patientData);
+      setCurrentPatient(patient);
+      
+      // Add initial welcome message
+      setMessages([{
+        role: "assistant",
+        content: `Hello ${patient.name}! I'm your AI medical assistant for cardiology consultations. I see you're registered with email ${patient.email}. I'll help collect your health information to assist with your care. What symptoms or health concerns brought you here today?`,
+        timestamp: new Date().toISOString()
+      }]);
+    } else {
+      // If no patient data, redirect to registration
+      toast.error("Please register first");
+      navigate("/register");
+      return;
     }
-  }, [data, selectedVisit]);
+  }, [navigate]);
 
+  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    if (!patient.isLoggedIn) {
-      navigate("/login");
-      toast.error("Please login to continue");
+    if (messageListRef.current) {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
     }
-    refetch();
-  }, [navigate, patient.isLoggedIn]);
+  }, [messages]);
 
-  if (isFetching) {
+  const sendMessageToBackend = async (userMessage) => {
+    setIsLoading(true);
+    
+    try {
+      // Add user message to chat immediately
+      const userMsg = {
+        role: "user", 
+        content: userMessage,
+        timestamp: new Date().toISOString()
+      };
+      
+      setMessages(prev => [...prev, userMsg]);
+      
+      // Prepare conversation history for backend
+      const conversationHistory = [...messages, userMsg];
+      
+      // Call backend API with user ID and conversation
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/patients/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: currentPatient.id,
+          message: userMessage,
+          conversationHistory: conversationHistory
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response from server');
+      }
+
+      const data = await response.json();
+      
+      // Add AI response to chat
+      const aiMsg = {
+        role: "assistant",
+        content: data.response,
+        timestamp: new Date().toISOString()
+      };
+      
+      setMessages(prev => [...prev, aiMsg]);
+      
+      // Check if conversation is complete
+      if (data.isComplete) {
+        setIsCompleted(true);
+        toast.success("Consultation complete! Doctor has been notified.");
+      }
+      
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast.error("Failed to send message. Please try again.");
+      
+      // Add error message to chat
+      const errorMsg = {
+        role: "assistant",
+        content: "I'm sorry, I'm having trouble connecting right now. Please try again.",
+        timestamp: new Date().toISOString()
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSendMessage = async () => {
+    const userInput = inputRef.current.value.trim();
+    if (!userInput || isLoading || isCompleted) return;
+    
+    // Clear input immediately
+    inputRef.current.value = "";
+    
+    // Send to backend
+    await sendMessageToBackend(userInput);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  // Don't render until we have patient data
+  if (!currentPatient) {
     return (
-      <div>
-        <Loading />
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+        <div>Loading patient data...</div>
       </div>
     );
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  let content;
-
-  if (data) {
-    content = data.visits.map((visit, index) => {
-      return (
-        <div
-          key={index}
-          className={selectedVisit !== visit ? styles.doc2 : styles.selected}
-          onClick={() => setSelectedVisit(visit)}
-        >
-          <img src="doc.webp" />
-          <div>
-            <div className={styles.t2}>Doctor</div>
-            <div className={styles.t3}>{visit.doctorName}</div>
-          </div>
-          <div className={styles.date}>&#128197; {visit.date}</div>
-        </div>
-      );
-    });
   }
 
   return (
     <>
       <Navbar />
-      <div className={styles.history}>
-        <div className={styles.d1}>
-          <img
-            src={data.photo}
-            alt="Patient Photo"
-            referrerPolicy="no-referrer"
-          />
-          <ul>
-            <li>Name : &nbsp;&nbsp;{data.name}</li>
-            <li>Gender : &nbsp;&nbsp;{data.gender}</li>
-            <li>Age : &nbsp;&nbsp;{data.age}</li>
-          </ul>
-          <ul>
-            <li>Allergies : &nbsp;&nbsp;{data.allergies}</li>
-            <li>Other Conditions : &nbsp;&nbsp;{data.otherConditions}</li>
-            <li>Weight : &nbsp;&nbsp;{data.weight} kg</li>
-          </ul>
-          <ul className={styles.lastInfo}>
-            <li>Medications : &nbsp;&nbsp;{data.medications}</li>
-            <li>Height : &nbsp;&nbsp;{data.height} cm</li>
-          </ul>
-        </div>
-        <div className={styles.d2}>
-          <ul>
-            <li>Overview : &nbsp;&nbsp;{data.overview}</li>
-          </ul>
+      <div className={styles.patientInfo}>
+        <div className={styles.patientCard}>
+          <h2>Patient Information</h2>
+          <div className={styles.patientDetails}>
+            <div className={styles.infoRow}>
+              <span className={styles.label}>Name:</span>
+              <span className={styles.value}>{currentPatient.name}</span>
+            </div>
+            <div className={styles.infoRow}>
+              <span className={styles.label}>Email:</span>
+              <span className={styles.value}>{currentPatient.email}</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div className={styles.lowerSection}>
-        <div className={styles.selectVisit}>
-          <div className={styles.docvisit}>
-            <div className={styles.t1}>Doctors Visits</div>
-            <div className={styles.stylingDocs}>
-              <div className={styles.docs}>{content}</div>
-            </div>
-          </div>
-          <div className={styles.button}>
-            <Link to="/healthHistoryForm">
-              <div className={styles.b}>Create New Record</div>
-            </Link>
+
+      {/* Chat Interface */}
+      <div className={styles.chatContainer}>
+        <div className={styles.chatHeader}>
+          <h3>AI Medical Assistant - Cardiology Consultation</h3>
+          <div className={styles.status}>
+            {isCompleted ? "✅ Completed" : "🔄 In Progress"}
           </div>
         </div>
-        {selectedVisit && (
-          <div className={styles.infobox}>
-            <div className={styles.title}>
-              <div className={styles.title1}>{selectedVisit.doctorName}</div>
-              <div className={styles.title2}>{selectedVisit.date}</div>
-            </div>
-            <div className={styles.boxes}>
-              <div className={styles.doccomments}>
-                <div className={styles.doccommentst}>Doctors Comments</div>
-                <div className={styles.comments}>
-                  {selectedVisit.doctorComments}
-                </div>
-              </div>
-              <div className={styles.doccomments}>
-                <div className={styles.doccommentst}>Patient Comments</div>
-                <div className={styles.comments}>
-                  {selectedVisit.patientComments}
-                </div>
-              </div>
-              <div className={styles.uploadedImg}>
-                <div className={styles.documentst}>Uploaded Documents</div>
-                <div className={styles.centerimgs}>
-                  <div className={styles.imgGrid}>
-                    {selectedVisit.fileUrl.map((url, index) => (
-                      <div key={index}>
-                        <DocumentPreview fileUrl={url} />
-                      </div>
-                    ))}
-                  </div>
+        
+        <div className={styles.messageList} ref={messageListRef}>
+          {messages.map((message, i) => (
+            <div
+              key={i}
+              className={`${styles.message} ${
+                message.role === "assistant" ? styles.incoming : styles.outgoing
+              }`}
+            >
+              <div className={styles.messageContent}>
+                <div className={styles.messageText}>{message.content}</div>
+                <div className={styles.messageTime}>
+                  {new Date(message.timestamp).toLocaleTimeString()}
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          ))}
+          
+          {isLoading && (
+            <div className={`${styles.message} ${styles.incoming}`}>
+              <div className={styles.messageContent}>
+                <div className={styles.typing}>AI is typing...</div>
+              </div>
+            </div>
+          )}
+        </div>
+        
+        <div className={styles.messageInput}>
+          <input
+            type="text"
+            placeholder={isCompleted ? "Consultation completed" : "Type your message here..."}
+            onKeyPress={handleKeyPress}
+            ref={inputRef}
+            disabled={isLoading || isCompleted}
+            className={styles.textInput}
+          />
+          <button 
+            onClick={handleSendMessage} 
+            className={styles.sendButton}
+            disabled={isLoading || isCompleted}
+          >
+            {isLoading ? "..." : "Send"}
+          </button>
+        </div>
       </div>
     </>
   );
