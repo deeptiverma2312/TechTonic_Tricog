@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+.grid_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* defines two equal columns */
+    grid-gap: 10px;
+    /* adds a 10px gap between the columns */
+    background: white;
+}
+
+.right_wrapper {
+ position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 70%;
+  padding-bottom: 3rem;
+  padding-left: 3rem;
+  width: 58%;
+  background: linear-gradient(270deg, #2A3842 2.95%, #2D485B 100%);
+  border-top-left-radius: 3rem;
+  padding-top: 3rem;
+}
+
+.login_content {
+    padding-left: 15px;
+    font-family: 'Comfortaa';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 42.5px;
+    line-height: 60px;
+
+    color: #FFFFFF;
+}
+
+
+
+.text_i_am_a {
+    margin-left: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 300px;
+    height: 30px;
+}
+
+.card {
+    background: linear-gradient(270deg, #2A3842 2.95%, #2D485B 100%);
+    margin-top: 15vh;
+    width: 25vw;
+    height: 65vh;
+    border-radius: 20px;
+    margin-left: 6vw;
+    font-size: 1rem;
+}
+
+.content_left_wrapper {
+    padding-top: 40px;
+    font-family: 'Comfortaa';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2vw;
+    line-height: 49px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.img2 {
+    margin-left: 10px;
+    margin-top: 30px;
+    width: 50%;
+    padding-left: 5vw;
+    padding-top: 25px;
+}
+
+.patients_input {
+    margin-left: 150px;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 49px;
+    color: #FFFFFF;
+    display: inline;
+    padding-left: 10px;
+}
+
+.input_text1 {
+    margin-left: 30px;
+    height: 40px;
+    width: 300px;
+    font-size: 18px;
+    background: #EDF2F5;
+    border-radius: 8.48894px;
+}
+
+
+
+
+.google_login_b {
+    margin-top: 55px;
+    margin-left: 304px;
+    background-color: #1E90FF;
+    font-size: 22px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    height: 60px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    overflow: none;
+    width: 20rem;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    
+}
+.google_login_b:hover{
+    background-color: #1c7ee0;
+}
+
+.google_p {
+    margin-left:60px;
+    font-size: 24px;
+    font-family: 'Inter', sans-serif;
+    margin-top: 40px;
+    font-weight: 400;
+    text-align: center;
+    position: relative;
+
+}
+
+.loggedin{
+    margin-right:30px;
+}
+
+.google_p img{
+    width:60px;
+    height:60px;
+    position: absolute;
+    left:-90px;
+    top:-16.3px;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.login_lowerpart {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 0;
+
+}
+
+.img3 {
+    width: 280px;
+    margin-top: -50px;
+
+}
+
+.login_lower_content {
+    margin-top: 70px;
+    font-family: 'Comfortaa';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 40px;
+    color: #FFFFFF;
+}
+
+
+@media (max-width:1140px) {
+
+    .grid_container {
+        background: white;
+        display: flex;
+        padding-top:10px;
+    }
+    .left_wrapper{
+        display: none;
+    }
+    .right_wrapper {
+        width: 90%;
+        margin:auto;
+        border-radius: 13px !important;
+        padding: 0;
+        height: fit-content;
+        border-radius: 0;
+        background: linear-gradient(270deg, #2A3842 2.95%, #2D485B 100%);
+        position: relative;
+        height: 80vh;
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    justify-content: center;
+    }
+    
+    .login_content {
+        display: flex;
+        font-family: 'Comfortaa';
+        font-style: normal;
+        font-weight: 400;
+        padding: 0;
+        font-size: 5vw;
+        line-height: 60px;
+        color: #FFFFFF;
+        justify-content: center;
+    
+        
+    }
+
+    .patients_input {
+        margin-left: 19vw;
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 5vw;
+        line-height: 40px;
+        color: #FFFFFF;
+        display: inline;
+        padding-left: 10px;
+    }
+    
+    .input_text1 {
+        margin-left: 4vw;
+        height: 60px;
+        width: 40vw;
+        font-size: 4vw;
+        background: #EDF2F5;
+        border-radius: 8.48894px;
+    }
+
+    .login_lower_content{
+        margin-left:13vw;
+        width:70vw;
+        font-size:4vw;
+    }
+
+    .login_lowerpart img{
+        display: none;
+    }
+
+    .google_login_b {
+        margin-top: 10.3vh;
+        margin-left: 23vw;
+        background-color: #1E90FF;
+        color: white;
+        font-family: 'Inter', sans-serif;
+        height: 15vw;
+        cursor: pointer;
+        border: none;
+        border-radius: 20px;
+        overflow: none;
+        width: 50vw;
+        box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+    }
+
+    .google_p img{
+        width:10vw;
+        height:15vw;
+        position: absolute;
+        left:-14vw;
+        top:-5.4vw;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
+    }
+
+    .google_p {
+        margin-left:7.5vw;
+        font-size: 4vw;
+        font-family: 'Inter', sans-serif;
+        /* margin-top: 4vw; */
+        top:-18.3px;
+        font-weight: 400;
+        text-align: center;
+        position: relative;
+    }
+    
+    .loggedin{
+        margin-right:30px;
+    }
+       
+}
+
