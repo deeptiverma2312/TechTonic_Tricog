@@ -13,6 +13,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import Appointment from "./pages/Appointment/Appointment";
 
 // Simplified router - only essential routes for hackathon
 const router = createBrowserRouter(
@@ -22,7 +23,8 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="health_history" element={<Health_history />} />
       <Route path="loading" element={<Loading />} />
-      <Route path="*" element={<Error404 />} />
+      <Route path="appointment" element={<Appointment />} />
+      
     </Route>
   )
 );

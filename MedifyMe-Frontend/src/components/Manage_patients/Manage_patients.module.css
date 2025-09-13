@@ -20,7 +20,7 @@
   width: 5.2vw;
   text-align: center;
   padding:3px;
-  background: #CDAA64;
+  background: #fa1111de;
   border-radius: 30px;
 }
 
@@ -116,7 +116,7 @@
   height: 2vw;
   margin-left: 20px;
   display: inline;
-  background: #CDAA64;
+  background: #fa1111de;
   border-radius: 50px;
   font-size: 1.08vw;
   cursor: pointer;
@@ -134,7 +134,7 @@
   justify-content: center;
   font-size:1vw;
   margin-top:0.8rem;
-  background: #CDAA64;
+  background: #fa1111de;
   border-radius: 50px;
   cursor: pointer;
 }
@@ -212,7 +212,7 @@
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #CDAA64;
+  background-color: #fa1111de;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */

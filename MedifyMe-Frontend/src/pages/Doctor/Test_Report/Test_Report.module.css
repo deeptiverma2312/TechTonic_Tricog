@@ -108,7 +108,7 @@ a{
 
 .b {
     padding: 2px 35px;
-    background: #CDAA64;
+    background: #fa1111de;
     border-radius: 50px;
     font-family: 'Comfortaa';
     font-style: normal;
@@ -182,7 +182,7 @@ a{
     height: 602px;
     width: 1125px;
     background: #F1F1F1;
-    border: 5px solid #CDAA64;
+    border: 5px solid #fa1111de;
     border-radius: 20px;
     position: absolute;
     left: 25%;
@@ -279,13 +279,13 @@ a{
     font-size:16px;
     font-weight: 600;
     border-radius: 20px;
-    background-color:#CDAA64;
+    background-color:#fa1111de;
     font-family: "Comfortaa";
     cursor :pointer;
 }
 .leftd_cont h3{
     font-family: "Comfortaa";
-    background-color:#CDAA64;
+    background-color:#fa1111de;
     color:black;
     width:60%;
     height:4vh;
@@ -331,7 +331,7 @@ a{
 
 .edit_btn_clicked img{
     width:26px;
-    border:2px solid #CDAA64;
+    border:2px solid #fa1111de;
     border-radius: 50px;
 }
 
@@ -361,7 +361,7 @@ a{
 
 .leftu_cont h3{
     font-family: "Comfortaa";
-    background-color:#CDAA64;
+    background-color:#fa1111de;
     color:black;
     width:60%;
     height:4vh;
@@ -381,7 +381,7 @@ a{
     font-size:16px;
     font-weight: 600;
     border-radius: 20px;
-    background-color:#CDAA64;
+    background-color:#fa1111de;
     font-family: "Comfortaa";
     cursor :pointer;
     position: absolute;
@@ -436,7 +436,7 @@ a{
 
 .rightd_cont h3{
     font-family: "Comfortaa";
-    background-color:#CDAA64;
+    background-color:#fa1111de;
     color:black;
     width:40%;
     height:4vh;

@@ -10,7 +10,7 @@
   margin: auto;
   width: 96%;
   background: linear-gradient(90deg, #2d485c 0%, #2b3f4d 47.19%, #29343c 100%);
-  border: 3px solid #cdaa64;
+  border: 3px solid #fa1111de;;
   border-radius: 50px;
   margin-top: 20px;
 }
@@ -97,7 +97,7 @@
 }
 
 .b {
-  background: #cdaa64;
+  background: #fa1111de;;
   border-radius: 50px;
   font-family: "Comfortaa";
   font-style: normal;
@@ -208,7 +208,7 @@
 
 .infobox {
   position: relative;
-  border: 3px solid #cdaa64;
+  border: 3px solid #fa1111de;;
   border-radius: 20px;
   height: 50vh;
   margin-left: 2%;
@@ -269,7 +269,7 @@
 .doccommentst {
   display: flex;
   width: fit-content;
-  background: #cdaa64;
+  background: #fa1111de;;
   border-radius: 50px;
   padding: 8px 20px;
   height: 20px;

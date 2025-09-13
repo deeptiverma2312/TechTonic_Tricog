@@ -16,14 +16,13 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <div>
-          <Link to="/">
             <div className={styles.logoSection}>
-              <img alt="brand" src={Brand} />
+              <img alt="brand" />
               <span className={styles.brand}>
-                HEARTIFY<p className={styles.brandIn}>ME</p>
+                TRICOGIFY<p className={styles.brandIn}>ME</p>
               </span>
             </div>
-          </Link>
+
         </div>
         <div className={styles.nav_elements}>
           <ul>
@@ -88,7 +87,7 @@ const Navbar = () => {
             </li> */}
           </ul>
         </div>
-        <div className={styles.hamburger}><Burger patient/></div>
+        {/* <div className={styles.hamburger}><Burger patient/></div> */}
       </div>
     </nav>
   );

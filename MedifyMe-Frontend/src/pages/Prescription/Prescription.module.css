@@ -85,7 +85,7 @@
 
 .b {
     padding: 2px 35px;
-    background: #CDAA64;
+    background: #fa1111de;
     border-radius: 50px;
     font-family: 'Comfortaa';
     font-style: normal;
@@ -169,7 +169,7 @@
     height: 602px;
     width: 1125px;
     background: #F1F1F1;
-    border: 5px solid #CDAA64;
+    border: 5px solid #fa1111de;
     border-radius: 20px;
     position: absolute;
     left: 25%;
@@ -288,7 +288,7 @@
 .documentst {
     display: flex;
     align-items: center;
-    background: #CDAA64;
+    background: #fa1111de;
     color: black;
     border-radius: 50px;
     padding: 8px;

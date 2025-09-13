@@ -26,7 +26,7 @@
   margin-top: 10px;
   padding-bottom: 69px;
   width: 950px;
-  border: 5px solid #CDAA64;
+  border: 5px solid #fa1111de;
   background: #f1f1f1;
   border-radius: 20px;
   padding-top: 30px;
@@ -41,7 +41,7 @@
   width: 97.5%;
   height: 150px;
   background: linear-gradient(90deg, #2d485c 0%, #2b3f4d 47.19%, #29343c 100%);
-  border: 3px solid #cdaa64;
+  border: 3px solid #fa1111de;;
   border-radius: 20px;
 }
 
@@ -232,7 +232,7 @@
 
 
 .coupon_button {
-  background: #CDAA64;
+  background: #fa1111de;
   border-radius: 15px;
   font-family: 'Comfortaa';
   font-style: normal;
@@ -354,7 +354,7 @@
 .b {
   padding: 6px 35px;
   gap: 10px;
-  background: #CDAA64;
+  background: #fa1111de;
   border-radius: 50px;
   font-family: 'Comfortaa';
   font-style: normal;

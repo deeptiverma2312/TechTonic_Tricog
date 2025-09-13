@@ -78,7 +78,7 @@
   font-family: 'Yeseva One', cursive;
   color: white;
   display: inline !important;
-  margin-top: 40px;
+  margin-top: 3px;
 }
 
 .logoSection img {
@@ -86,12 +86,12 @@
 }
 
 .brandIn {
-  color: #CDAA64;
+  color: #fa1111de;
   display: inline !important;
 }
 
 .appointment {
-  background-color: #CDAA64;
+  background-color: #fa1111de;
   color: #28333A !important;
   padding: 10px;
   padding-left: 20px;
@@ -100,7 +100,7 @@
 }
 
 .nav_elements ul li.active a {
-  color: #CDAA64;
+  color: #fa1111de;
   font-weight: 500;
   position: relative;
 }
@@ -148,7 +148,7 @@
     font-family: 'Yeseva One', cursive;
     color: white;
     display: inline !important;
-    margin-top: 40px;
+    margin-top: 3px;
   }
 
   .logoSection img {

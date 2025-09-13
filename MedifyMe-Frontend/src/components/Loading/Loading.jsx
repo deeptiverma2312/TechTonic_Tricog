@@ -25,7 +25,7 @@ function Loading() {
         />
       </svg>
       <span className={styles.brand}>
-        HEARTIFY<p className={styles.brandIn}>ME</p>
+        TRICOGIFY<p className={styles.brandIn}>ME</p>
       </span>
     </div>
   );

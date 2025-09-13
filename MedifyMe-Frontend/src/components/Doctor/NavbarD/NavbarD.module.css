@@ -45,7 +45,7 @@
 }
 
 .patients {
-  background-color: #CDAA64;
+  background-color: #fa1111de;
   padding: 8px 20px;
   border-radius: 50px;
 }
@@ -96,7 +96,7 @@
 }
 
 .brandIn {
-  color: #CDAA64;
+  color: #fa1111de;
   display: inline !important;
 }
 
@@ -149,7 +149,7 @@
 
 .nav_elements ul li.active a {
   font-weight: 500;
-  color: #CDAA64;
+  color: #fa1111de;
   text-decoration: none;
 }
 
@@ -184,7 +184,7 @@
     font-family: 'Yeseva One', cursive;
     color: white;
     display: inline !important;
-    margin-top: 40px;
+    margin-top: 3px;
   }
 
   .logoSection img {

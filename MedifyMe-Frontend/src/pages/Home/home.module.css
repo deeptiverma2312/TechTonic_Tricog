@@ -68,7 +68,7 @@
   font-weight: 500;
   font-size: 3.5vw;
 
-  color: hwb(0 99% 1% / 0);
+  color: hwb(0 94% 5%);
   opacity: 0;
   transform: translateX(50px);
   animation: fadeInRight 0.75s ease-in forwards;
@@ -87,16 +87,16 @@
   gap: 10px;
   margin-top: 20px;
 
-  background: #cdaa64;
+  background: #fa1111de;;
   border-radius: 50px;
-  font-family: "Comfortaa";
+  font-family: "Yeseva One";
   font-style: normal;
   font-weight: 500;
   font-size: 1.5vw;
   line-height: 28px;
   border: none;
   width: fit-content;
-  color: #000000;
+  color: #ffffff;
 }
 
 .button {
